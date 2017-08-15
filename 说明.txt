@@ -1,0 +1,45 @@
+描述：
+	练习写的天气App
+	
+天气数据来源：
+	ttp://flash.weather.com.cn/wmaps/xml/china.xml 这个是全国天气的根节点，列出所有的省，
+	其中的pyName字段是各个省XML的文件名，比如北京的是beijing，那就意味着北京的XML地址为
+	 http://flash.weather.com.cn/wmaps/xml/beijing.xml 一个省的天气，其中列出该省各个市的数据，
+	 北京就列出各个区。 tmp1是最低温低，tmp2是最高温度，url非常重要，我们一会儿再说。
+	 state1和state2是神马转神马，每个数代表一个天气现象。天气现象 非常多，我本想全部分析出来，
+	 后来直接放弃了这个想法。因为我看到了一个城市的天气现象的编码是26...我现在知道的有0.晴 1.多云
+	  2.阴 6.雨夹雪 7.小雨 8.中雨 13.阵雪 14.小雪 其中后来发现知道这个没用，这个数字的主要作用是
+	  检索图片的！！！
+获取方式：
+	获取所有省：http://flash.weather.com.cn/wmaps/xml/china.xml	（返回包含：省pyName是省编号）
+	获取省所有市：http://flash.weather.com.cn/wmaps/xml/省pyname.xml	（返回包含：市pyName是市编号，市天气）
+	获取某个市：http://flash.weather.com.cn/wmaps/xml/市pyname.xml	（返回包含：市、县/区天气）
+	所有我们应该根据定位或者用户选择查询某个市天气；
+	在初始化的时候可以将获取到的省、市、区信息保存到数据库中，供定位和选择用；
+	
+源文件说明：
+	activity 存放活动包
+		|---- Base
+		
+	db		 数据库相关
+		|---- SimpleWeatherOpenHelper.java：建表/升级数据库
+		
+	model	所有模型相关
+		|---- Province.java：省表实体类
+		|---- City.java：市表实体类
+		|---- County.java：区县表实体类
+	
+	receiver 所有广播接收器
+		|---- 
+	
+	service	所有服务相关
+		|---- 
+		|---- 
+	
+	util	存放工具相关
+		|---- HttpUtil.java：封装的Http请求工具类，相关：HttpCallbackListener.java回调接口
+		|---- HttpCallbackListener.java：HttpUtil工具类回调接口，用于接收请求结果或者出错信息
+		|---- LogUtil.java：日志工具类，主要增加设定级别，在正式发布的时候将LEVEL设为NOTHING
+		|---- BaseActivity.java：封装的Activity基类，配合ActivityCollector.java实现活动管理
+		|---- ActivityCollector.java：对基于BaseActivity继承的活动进行管理
+		|---- BaseApplicaton.java：主要为了在创建的时候保存context，以便在任何地方获取
