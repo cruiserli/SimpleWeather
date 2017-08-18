@@ -12,7 +12,7 @@ public class BaseActivity extends Activity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		
-		Log.d("BaseActivity::onCreate()", this.getClass().toString());
+		LogUtil.d("BaseActivity::onCreate()", this.getClass().toString());
 		ActivityCollector.addActivity(this);
 	}
 	
@@ -21,7 +21,7 @@ public class BaseActivity extends Activity {
 		// TODO Auto-generated method stub
 		super.onDestroy();
 		
-		Log.d("BaseActivity::onDestroy()", this.getClass().toString());
+		LogUtil.d("BaseActivity::onDestroy()", this.getClass().toString());
 		ActivityCollector.removeActivity(this);
 	}
 }

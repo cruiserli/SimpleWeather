@@ -43,3 +43,4 @@
 		|---- BaseActivity.java：封装的Activity基类，配合ActivityCollector.java实现活动管理
 		|---- ActivityCollector.java：对基于BaseActivity继承的活动进行管理
 		|---- BaseApplicaton.java：主要为了在创建的时候保存context，以便在任何地方获取
+		|---- SimpleWeatherDBUtil.java：从中国天气网获取省、市、县信息，解析并写入数据中；

@@ -41,6 +41,21 @@ public class SimpleWeatherDB {
 		return simpleWeatherDB;
 	}
 	
+	// 开始事务
+	public void beginTransaction(){
+		db.beginTransaction();
+	}
+	
+	// 提交事务
+	public void commitTransaction(){
+		db.setTransactionSuccessful();
+	}
+	
+	// 结束事务
+	public void endTransaction(){
+		db.endTransaction();
+	}
+	
 	// 将Province实例添加到数据库
 	public long inertProvince(Province province){
 		long insertedId = -1;

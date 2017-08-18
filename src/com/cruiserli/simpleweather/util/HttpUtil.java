@@ -15,7 +15,7 @@ import android.graphics.LinearGradient;
 
 public class HttpUtil {
 	
-	// 发送Http请求
+	// 发送Http请求：线程+回调函数
 	public static void sendHttpRequest(final String urlAddress, 
 			final HttpCallbackListener listener)
 	{
@@ -56,5 +56,37 @@ public class HttpUtil {
 				}
 			}
 		}).start();
+	}
+	
+	// Get方式发送Http请求，请求过程没有放在线程中，如果请求时间过长可能会造成UI停止响应
+	public static String sendHttpRequestDirectly(String urlAddress)
+	{
+		StringBuilder response = new StringBuilder();
+		HttpURLConnection connection = null;
+		try 
+		{
+			URL url = new URL(urlAddress);
+			connection = (HttpURLConnection)url.openConnection();
+			connection.setRequestMethod("GET");
+//			connection.setConnectTimeout(8000);
+//			connection.setReadTimeout(8000);
+//			connection.setDoInput(true);
+//			connection.setDoOutput(true);
+
+			InputStream inputStream = connection.getInputStream();
+			BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+
+			String line;
+			while ((line = reader.readLine()) != null) {
+				response.append(line);
+			}
+
+		} catch (Exception e) {
+			LogUtil.e("HttpUtil", e.getMessage());
+		} finally {
+			if (connection != null)
+				connection.disconnect();
+		}
+		return response.toString();
 	}
 }
